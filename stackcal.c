@@ -114,7 +114,7 @@ void main(){
         input[i] = (char*)malloc(sizeof(char) * 100);
     }
 
-    for(int i = 0; i < size; i++){//공백 제거
+    for(int i = 0; i < size; i++){
          strcpy(input[i], ptr);
          ptr = strtok(NULL, " ");
         
@@ -124,7 +124,7 @@ void main(){
     printf("후위 표기법 : %s\n", buf);
 
     size = 1;
-    for(int i = 0; i < strlen(buf) - 1; i++){
+    for(int i = 0; i < strlen(buf) - 1; i++){//마지막에 공백이 들어감으로 1을 빼준다.
         if(buf[i] == ' ') size++;
     }
 

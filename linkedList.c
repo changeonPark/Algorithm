@@ -52,7 +52,7 @@ void freeAll(Node *head){
     Node *target = head; //head를 비우기 위해  target에 head 삽입.
     Node *temp = target; //head의 next값을 살리기 위해 temp 값에 저장.
     while(target != NULL){
-        temp = temp->next;
+        temp = target->next;
         free(target);
         target = temp;
     }
@@ -93,4 +93,5 @@ void main(){
     searchNode(head, 15);
     searchNode(head, 20);
     freeAll(head);
+    printNode(head);
 }
