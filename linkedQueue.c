@@ -42,7 +42,7 @@ void push(Queue *queue, int data){
     else{
         queue->rear->next = node; //next of last node link to new node
     }
-    queue->rear = node;
+    queue->rear = node;//new node is last node so rear link to new node
     queue->count++;
 }
 
@@ -52,13 +52,13 @@ void pop(Queue *queue){
         return;
     }
     Node *node = queue->front;//node link to first node
-    queue->front = node->next;
+    queue->front = node->next;//last node will delete so front link to next of last node
     free(node);
-    queue->count--;
+    queue->count--;//delete last node, so count of nodes minus
 }
 
 void show(Queue *queue){
-    Node *node = queue->front;
+    Node *node = queue->front;//front pointing first node
     printf("Start\n");
     while(node != NULL){
         printf("%d\n", node->data);
