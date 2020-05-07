@@ -4,18 +4,19 @@
 #define SIZE 1000
 
 int array[SIZE];
-
-int swap(int *position, int *min){//현재 배열과 가장 작은 수를 가진 배열의 값을 바꾸어 주기 위함.
-    printf("Test code nonswap : %d %d %d %d\n", min, position, *min, *position);
+int arr[6] = {1, 3, 7, 5, 2, 4};
+int check;
+int swap(int *x, int *y){//현재 배열과 가장 작은 수를 가진 배열의 값을 바꾸어 주기 위함.
     int temp; //바꾸려는 값을 임시 저장하기 위한 변수.
-    temp = *min;
-    *min = *position;
-    *position = temp;
-    printf("Test code swap : %d %d %d %d\n", min, position, *min, *position);
+    temp = *x;
+    *x = *y;
+    *y = temp;
 }
 void selectionSort(); //선택 정렬 함수 선언
 void insertionSort(); //삽입 정렬 함수 선언
-
+void leftquickSort(int left, int right, int check);
+void rightquickSort(int left, int right);
+void middlequickSort(int left, int right);
 /*
 선택 정렬과삽입 정렬의 차이(일렬로 펼쳐진 카드 뭉치를 예로 든다.)
 선택 정렬: 차례대로 카드를 하나씩 선택(1)하고 정렬된 카드의 마지막까지 비교를 하였을 때! 가장 작은 카드를 '선택'(2)하여 1과 2의 위치를 바꿔준다.
@@ -26,8 +27,12 @@ void insertionSort(); //삽입 정렬 함수 선언
 
 
 void main(){
- //   selectionSort();
-    insertionSort();
+    //selectionSort();
+    //insertionSort();
+    rightquickSort(0, 5);
+    for(int i = 0; i < 6; i++){
+        printf("%d\n", arr[i]);
+    }
 }
 
 /*
@@ -92,4 +97,46 @@ void insertionSort(){
     for(int i = 0; i < num; i++){
         printf("%d ", array[i]);
     }
+}
+
+void leftquickSort(int left, int right, int check){
+    if(left >= right) return;
+    int pivot = left, i = left + 1, j = right, chk = check;
+    printf("check: %d\n", chk);
+    while(i <= j){//left와 right가 엇갈리기 전까지 반복
+        while(i <= right && arr[i] <= arr[pivot]){
+            i++;
+            printf("i = %d\n", i);
+        }
+        while(j > left && arr[j] >= arr[pivot]){
+            j--;
+            printf("j = %d\n", j);
+        }
+        if(i > j) swap(&arr[pivot], &arr[j]);
+        else swap(&arr[i], &arr[j]);
+    }
+    leftquickSort(left, j - 1, 0);
+    leftquickSort(j + 1, right, 1);
+    
+}
+
+void rightquickSort(int left, int right){
+    if(left < right){
+        int pivot = right, i = left, j = right - 1;
+
+        while(i <= j){
+            while(i < right && arr[i] <= arr[pivot]) i++;
+            while(j >= left && arr[j] >= arr[pivot]) j--;
+
+            if(i > j) swap(&arr[i], &arr[pivot]);
+            else swap(&arr[i], &arr[j]);
+        }
+
+        rightquickSort(left, i - 1);
+        rightquickSort(i + 1, right);
+    }
+}
+
+void middlequickSort(int left, int right){
+
 }
