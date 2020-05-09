@@ -141,7 +141,7 @@ void rightquickSort(int left, int right){
 
 int partition(int left, int right){
     int pivot = right;//pivot을 최우측 값으로 결정
-    int cnt = left; //왼쪽부터 비교할 때 pivot의 값보다 작은 경우를 기록하기 위함.>> 첫 값이 pivot보다 작게 될 경우 오류남.
+    int cnt = left; //왼쪽부터 비교할 때 pivot의 값보다 작은 경우를 기록하기 위함.
 
     for(int i = left; i < right; i++){//왼쪽부터 오른쪽 - 1(pivot을 맨 우측값으로 정했기 때문)까지 반복
         if(arr[i] < arr[pivot]){ //현재 위치의 값이 pivot의 값보다 작을 경우
@@ -150,16 +150,16 @@ int partition(int left, int right){
             cnt++; //cnt를 증가시켜 준다.
         }
     }
-    swap(&arr[cnt], &arr[pivot]);
+    swap(&arr[cnt], &arr[pivot]); //cnt위치의 값과 pivot위치의 값 변경 >> arr[cnt]가 pivot이 된다.
     return cnt;
 }
 
 void funcquickSort(int left, int right){
     if(left < right){
-        int point = partition(left, right);
+        int point = partition(left, right); //point위치의 값의 왼쪽은 작고 오른쪽은 크게 만들어준다.
 
-        funcquickSort(left, point - 1);
-        funcquickSort(point + 1, right);
+        funcquickSort(left, point - 1); //시작부터 pivot보다 작았던 수 까지의 값들 비교
+        funcquickSort(point + 1, right); //pivot보다 컸던 수들부터 오른쪽 까지 비교
     }
 }
 
