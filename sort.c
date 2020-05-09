@@ -4,7 +4,7 @@
 #define SIZE 1000
 
 int array[SIZE];
-int arr[6] = {1, 3, 7, 5, 2, 4};
+int arr[6] = {1, 3, 2, 4, 9, 7};
 int check;
 int swap(int *x, int *y){//현재 배열과 가장 작은 수를 가진 배열의 값을 바꾸어 주기 위함.
     int temp; //바꾸려는 값을 임시 저장하기 위한 변수.
@@ -16,7 +16,8 @@ void selectionSort(); //선택 정렬 함수 선언
 void insertionSort(); //삽입 정렬 함수 선언
 void leftquickSort(int left, int right, int check);
 void rightquickSort(int left, int right);
-void middlequickSort(int left, int right);
+void funcquickSort(int left, int right);
+int partition(int left, int right);
 /*
 선택 정렬과삽입 정렬의 차이(일렬로 펼쳐진 카드 뭉치를 예로 든다.)
 선택 정렬: 차례대로 카드를 하나씩 선택(1)하고 정렬된 카드의 마지막까지 비교를 하였을 때! 가장 작은 카드를 '선택'(2)하여 1과 2의 위치를 바꿔준다.
@@ -29,7 +30,8 @@ void middlequickSort(int left, int right);
 void main(){
     //selectionSort();
     //insertionSort();
-    rightquickSort(0, 5);
+    //rightquickSort(0, 5);
+    funcquickSort(0, 5);
     for(int i = 0; i < 6; i++){
         printf("%d\n", arr[i]);
     }
@@ -125,18 +127,38 @@ void rightquickSort(int left, int right){
         int pivot = right, i = left, j = right - 1;
 
         while(i <= j){
-            while(i < right && arr[i] <= arr[pivot]) i++;
-            while(j >= left && arr[j] >= arr[pivot]) j--;
+            while(i < right && arr[i] < arr[pivot]) i++; //pivot보다 큰 수 왼쪽에서부터 search
+            while(j >= left && arr[j] > arr[pivot]) j--; //pivot보다 작은 수를 오른쪽에서부터 search
 
-            if(i > j) swap(&arr[i], &arr[pivot]);
-            else swap(&arr[i], &arr[j]);
+            if(i <= j) swap(&arr[i], &arr[j]);
+            else swap(&arr[pivot], &arr[i]);
         }
 
-        rightquickSort(left, i - 1);
-        rightquickSort(i + 1, right);
+        rightquickSort(left, i - 1); //왼쪽 처음부터 pivot 이전 값까지
+        rightquickSort(i + 1, right); //pivot 다음 값에서 오른쪽 끝까지
     }
 }
 
-void middlequickSort(int left, int right){
+int partition(int left, int right){
+    int pivot = right;
+    int cnt = left - 1;
 
+    for(int i = left; i < right; i++){
+        if(arr[i] < arr[pivot]){
+            cnt++;
+            swap(&arr[cnt], &arr[i]);
+        }
+    }
+    swap(&arr[cnt + 1], &arr[pivot]);
+    return (cnt + 1);
 }
+
+void funcquickSort(int left, int right){
+    if(left < right){
+        int point = partition(left, right);
+
+        funcquickSort(left, point - 1);
+        funcquickSort(point + 1, right);
+    }
+}
+
