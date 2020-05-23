@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//우선 순위 큐
 //입력 받은 두 값을 바꾸기 위한 함수
 void swap(int* a, int* b){
     int temp = *a;
