@@ -8,7 +8,7 @@ typedef struct Node
 }Node;
 
 
-
+//stack구조형 Node 생성
 void addNode(Node* root, int idx){
     Node* node = (Node*)malloc(sizeof(Node));
     node->index = idx;
@@ -16,19 +16,19 @@ void addNode(Node* root, int idx){
     root->next = node;
 }
 
+//깊이 우선 탐색 함수
 void dfs(int x, Node** a, int* c){
-    if(c[x]) {
-        printf("check c[x] : %d\n", c[x]);
-        return;
-    }
-    c[x] = 1;
+    if(c[x]) return;//c[x]가 참일 경우(!=0) 방문한 것이므로 탈출
+    
+    
+    c[x] = 1; //방문을 했으므로 c[x]의 값을 1로 변경.
     printf("%d ", x);
     
-    Node* cur = a[x]->next;
+    Node* cur = a[x]->next; //현재 정점과 이어지는 곳을 cur에 저장
 
-    while(cur != NULL){
-        int next = cur->index;
-        dfs(next, a, c);
+    while(cur != NULL){ 
+        int next = cur->index; //cur의 index값 즉, 현재 정점과 이어지는 곳의 index값을 next에 저장
+        dfs(next, a, c);//함수 실행
         cur = cur->next;
     }
 
