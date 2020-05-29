@@ -25,18 +25,11 @@ void dfs(int x, Node** a, int* c){
     printf("%d ", x);
     
     Node* cur = a[x]->next; //현재 정점과 이어지는 곳을 cur에 저장
-
-    while(cur != NULL){ 
+    while(cur != NULL){ //모든 노드를 방문할 때 까지 반복
         int next = cur->index; //cur의 index값 즉, 현재 정점과 이어지는 곳의 index값을 next에 저장
         dfs(next, a, c);//함수 실행
         cur = cur->next;
     }
-
-
-
-    
-    
-
 }
 
 void main(){
