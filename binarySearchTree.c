@@ -26,11 +26,11 @@ Node* insert(Node* root, int data){
     return root;
 }
 //전위 순회 함수
-void preorder(Node* root){
+void inorder(Node* root){
     if(root == NULL) return;
+    inorder(root->leftchild);
     printf("%d ", root->data);
-    preorder(root->leftchild);
-    preorder(root->rightchild);
+    inorder(root->rightchild);
 }
 //특정 값보다 큰 수중 제일 작은 수를 찾는다.
 Node* findMin(Node* root){
@@ -72,5 +72,5 @@ void main(){
     root = insert(root, 37);
     root = insert(root, 50);
     root = delete(root, 17);
-    preorder(root);
+    inorder(root);
 }
