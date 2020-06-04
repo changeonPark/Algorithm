@@ -21,7 +21,6 @@ typedef struct Node{
     Edge* data;
     struct Node* next;
 }Node;
-
 //x와 y의 값을 바꾸어줄 함수
 void Swap(Edge* x, Edge* y){
     Edge temp;
@@ -93,22 +92,22 @@ void main(){
     int vertex, edge;
     printf("정점과 간선의 수를 입력하시오: ");
     scanf("%d %d", &vertex, &edge);
-
     adj = (Node**)malloc(sizeof(Node*) * (vertex + 1));
     for(int i = 1; i <= vertex; i++) adj[i] = NULL;
     //양방향 연결
-    for(int i = 0; i < edge; i++){
+    for(int i = 1; i <= edge; i++){
         printf("연결할 두 정점과 가중치를 입력하시오: ");
         int x, y, cost;
         scanf("%d %d %d", &x, &y, &cost);
+        
         Edge* edge1 = (Edge*)malloc(sizeof(Edge));
         edge1->node = y;
         edge1->cost = cost;
         AddNode(adj, x, edge1);
 
         Edge* edge2 = (Edge*)malloc(sizeof(Edge));
-        edge1->node = x;
-        edge1->cost = cost;
+        edge2->node = x;
+        edge2->cost = cost;
         AddNode(adj, y, edge2);
     }
     //start prim`s Algorithm
@@ -120,21 +119,21 @@ void main(){
     Edge* start = (Edge*)malloc(sizeof(Edge));
     start->cost = 0; start->node = 1;
     Push(pq, start);
-
+    //start 먼저 실행 후 밑의 while문에서 node들의 정보를 불러온 후에 126의 while문 부터 실행한다.
     for(int i = 1; i <= vertex; i++){
         int nextnode = -1, nextcost = INT_MAX;
         while (1){
-            Edge* now = Pop(pq);
+            Edge* now = Pop(pq);//1번째 노드를 추출해 now에 저장.
             if(now == NULL) break;
             nextnode = now->node;
-            if(!arr[nextnode]){
+            if(!arr[nextnode]){//arr[nextnode]에 방문한 전적이 없으면..
              nextcost = now->cost;
              break;
             }
         }
         if(nextcost == INT_MAX) printf("Not Linked Graph\n");
         res += nextcost;
-        arr[nextnode] = 1;
+        arr[nextnode] = 1;//방문 처리
 
         Node* cur = adj[nextnode];
         while (cur != NULL){
