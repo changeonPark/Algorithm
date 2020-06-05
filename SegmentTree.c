@@ -50,10 +50,4 @@ void main(){
     Updata(0, NUMBER - 1, 1, 3, 2);
 
     printf("수정된 2~6까지의 구간 합: %d\n", Sum(0, NUMBER - 1, 2, 0, 6));
-    
-    int i = 1;
-    while(i < NUMBER * 4){
-        int j = g_tree[i];
-        i++;
-    }
 }
